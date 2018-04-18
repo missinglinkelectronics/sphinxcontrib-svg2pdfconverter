@@ -12,7 +12,7 @@ requires = ['Sphinx>=0.6']
 setup(
     name='sphinxcontrib-svg2pdfconverter',
     version='0.1.0',
-    url='https://github.org/missinglinkelectronics/sphinxcontrib-svg2pdfconverter',
+    url='https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter',
     download_url='https://pypi.org/project/sphinxcontrib-svg2pdfconverter',
     license='BSD',
     author='Stefan Wiehler',
