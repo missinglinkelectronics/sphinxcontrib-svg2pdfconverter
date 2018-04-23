@@ -7,7 +7,7 @@ Converts SVG images to PDF in case the builder does not support
 SVG images natively (e.g. LaTeX).
 '''
 
-requires = ['Sphinx>=0.6']
+requires = ['Sphinx>=1.6']
 
 setup(
     name='sphinxcontrib-svg2pdfconverter',
@@ -27,7 +27,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
         'Framework :: Sphinx :: Extension',
         'Topic :: Documentation',
         'Topic :: Utilities',
@@ -36,5 +36,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=requires,
+    python_requires='~=3.4',
     namespace_packages=['sphinxcontrib'],
 )
