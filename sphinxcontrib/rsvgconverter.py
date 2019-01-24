@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    sphinx.ext.rsvgconverter
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+    sphinxcontrib.rsvgconverter
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Converts SVG images to PDF using libRSVG in case the builder does not
     support SVG images natively (e.g. LaTeX).

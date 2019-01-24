@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    sphinx.ext.inkscapeconverter
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    sphinxcontrib.inkscapeconverter
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Converts SVG images to PDF using Inkscape in case the builder does not
     support SVG images natively (e.g. LaTeX).
