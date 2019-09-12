@@ -8,7 +8,7 @@
 
     :copyright: Copyright 2018-2019 by Stefan Wiehler
                 <stefan.wiehler@missinglinkelectronics.com>.
-    :license: BSD, see LICENSE for details.
+    :license: BSD, see LICENSE.txt for details.
 """
 import subprocess
 
