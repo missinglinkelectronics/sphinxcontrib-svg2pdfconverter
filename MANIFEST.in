@@ -1,3 +1,2 @@
-include README
+include README.rst
 include LICENSE.txt
-include CHANGES.*
