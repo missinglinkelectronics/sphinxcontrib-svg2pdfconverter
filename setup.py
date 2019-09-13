@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
+from os import path
 
-long_desc = '''
-Converts SVG images to PDF in case the builder does not support
-SVG images natively (e.g. LaTeX).
-'''
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 requires = ['Sphinx>=1.6.3']
 
@@ -18,7 +20,8 @@ setup(
     author='Stefan Wiehler',
     author_email='stefan.wiehler@missinglinkelectronics.com',
     description='Sphinx SVG to PDF converter extension',
-    long_description=long_desc,
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     zip_safe=False,
     classifiers=[
         'Development Status :: 4 - Beta',
