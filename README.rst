@@ -5,9 +5,10 @@ Sphinx SVG to PDF Converter Extension
 This extension converts SVG images to PDF in case the builder does not support
 SVG images natively (e.g. LaTeX).
 
-Internally, either `Inkscape <https://inkscape.org/>`_ or ``rsvg-convert`` from
-`libRSVG <https://wiki.gnome.org/Projects/LibRsvg>`_ as a more lightweight
-alternative is used to convert images.
+Internally, either `Inkscape <https://inkscape.org/>`_, ``rsvg-convert``
+from `libRSVG <https://wiki.gnome.org/Projects/LibRsvg>`_ or `CairoSVG
+<https://cairosvg.org/>`_ as progressively more lightweight alternatives
+are used to convert images.
 
 
 Installation
@@ -19,14 +20,24 @@ Just install via ``pip``:
 
    $ pip install sphinxcontrib-svg2pdfconverter
 
-You can choose between Inkscape and libRSVG by either adding
-``sphinxcontrib.inkscapeconverter`` or ``sphinxcontrib.rsvgconverter`` to the
-``extensions`` list in your ``conf.py``.
+You can choose between Inkscape, libRSVG and CairoSVG by adding
+``sphinxcontrib.inkscapeconverter``, ``sphinxcontrib.rsvgconverter`` or
+``sphinxcontrib.cairosvgconverter`` to the ``extensions`` list in your
+``conf.py``.
 
 Make sure to have either ``inkscape`` or the ``rsvg-convert`` command available
 in your systems ``PATH`` and, if necessary, adapt the
 ``inkscape_converter_bin`` or ``rsvg_converter_bin`` config value respectively.
 
+CairoSVG requires additional dependencies to be installed with:
+
+.. code-block:: console
+
+   $ pip install sphinxcontrib-svg2pdfconverter[CairoSVG]
+
+CairoSVG and its dependencies may require additional tools during the
+installation depending on the OS you are using; see the `CairoSVG documentation
+<https://cairosvg.org/documentation/#installation>`_ for further details.
 
 Configuration
 =============
@@ -50,3 +61,8 @@ RSVG
 ``rsvg_converter_args``
     Additional command-line arguments for the RSVG converter, as a list. By
     default, this is the emtpy list ``[]``.
+
+CairoSVG
+--------
+
+No configuration is required.
