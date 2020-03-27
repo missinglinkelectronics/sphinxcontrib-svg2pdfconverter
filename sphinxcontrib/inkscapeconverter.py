@@ -6,10 +6,11 @@
     Converts SVG images to PDF using Inkscape in case the builder does not
     support SVG images natively (e.g. LaTeX).
 
-    :copyright: Copyright 2018-2019 by Stefan Wiehler
+    :copyright: Copyright 2018-2020 by Stefan Wiehler
                 <stefan.wiehler@missinglinkelectronics.com>.
     :license: BSD, see LICENSE.txt for details.
 """
+import re
 import subprocess
 
 from sphinx.errors import ExtensionError
@@ -38,11 +39,19 @@ class InkscapeConverter(ImageConverter):
         try:
             args = [self.config.inkscape_converter_bin, '--version']
             logger.debug('Invoking %r ...', args)
-            ret = subprocess.call(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-            if ret == 0:
-                return True
-            else:
+            output = subprocess.check_output(args, stdin=subprocess.PIPE,
+                    universal_newlines=True)
+            match = re.search('Inkscape (.+) \(.+, .+\)', output)
+            if not match:
+                logger.warning(__('Inkscape command %r returned invalid result: %s\n '
+                                  'Check the inkscape_converter_bin setting'),
+                               self.config.inkscape_converter_bin, output)
                 return False
+            self._inkscape_version = match.group(1)
+            logger.debug('Inkscape version: %s', self._inkscape_version)
+            return True
+        except subprocess.CalledProcessError:
+            return False
         except (OSError, IOError):
             logger.warning(__('Inkscape command %r cannot be run. '
                               'Check the inkscape_converter_bin setting'),
@@ -54,8 +63,11 @@ class InkscapeConverter(ImageConverter):
         """Converts the image from SVG to PDF via Inkscape."""
         try:
             args = ([self.config.inkscape_converter_bin] +
-                    self.config.inkscape_converter_args +
-                    ['--export-pdf=' + _to, _from])
+                    self.config.inkscape_converter_args)
+            if self._inkscape_version.startswith('1.'):
+                    args += ['--export-filename=' + _to, _from]
+            else:
+                    args += ['--export-pdf=' + _to, _from]
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         except OSError as err:
