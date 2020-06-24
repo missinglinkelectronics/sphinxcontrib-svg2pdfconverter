@@ -39,8 +39,9 @@ class InkscapeConverter(ImageConverter):
         try:
             args = [self.config.inkscape_converter_bin, '--version']
             logger.debug('Invoking %r ...', args)
-            output = subprocess.check_output(args, stdin=subprocess.PIPE,
-                    universal_newlines=True)
+            output = subprocess.check_output(
+                args, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+                universal_newlines=True)
             match = re.search('Inkscape (.+) \(.+, .+\)', output)
             if not match:
                 logger.warning(__('Inkscape command %r returned invalid result: %s\n '
@@ -69,7 +70,9 @@ class InkscapeConverter(ImageConverter):
             else:
                     args += ['--export-pdf=' + _to, _from]
             logger.debug('Invoking %r ...', args)
-            p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            p = subprocess.Popen(args, stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
         except OSError as err:
             if err.errno != ENOENT:  # No such file or directory
                 raise
