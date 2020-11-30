@@ -16,7 +16,7 @@ from sphinx.errors import ExtensionError
 from sphinx.locale import __
 from sphinx.transforms.post_transforms.images import ImageConverter
 from sphinx.util import logging
-from sphinx.util.osutil import ENOENT, EPIPE, EINVAL
+from errno import ENOENT, EPIPE, EINVAL
 
 if False:
     # For type annotation
