@@ -42,7 +42,7 @@ class InkscapeConverter(ImageConverter):
             output = subprocess.check_output(
                 args, stdin=subprocess.PIPE, stderr=subprocess.PIPE,
                 universal_newlines=True)
-            match = re.search('Inkscape (.+) \(.+, .+\)', output)
+            match = re.search('Inkscape (.+)', output)
             if not match:
                 logger.warning(__('Inkscape command %r returned invalid result: %s\n '
                                   'Check the inkscape_converter_bin setting'),
