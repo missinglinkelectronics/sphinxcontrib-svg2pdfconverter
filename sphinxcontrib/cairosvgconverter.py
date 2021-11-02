@@ -51,7 +51,7 @@ class CairoSVGConverter(ImageConverter):
         """Converts the image from SVG to PDF via CairoSVG."""
         import cairosvg
         try:
-            cairosvg.svg2pdf(url=_from, write_to=_to)
+            cairosvg.svg2pdf(file_obj=open(_from, 'rb'), write_to=_to)
         except (OSError, URLError) as err:
             raise ExtensionError(__('CairoSVG converter failed with reason: '
                                     '%s') % err.reason)
