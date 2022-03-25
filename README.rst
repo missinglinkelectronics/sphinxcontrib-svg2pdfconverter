@@ -60,7 +60,7 @@ RSVG
 
 ``rsvg_converter_args``
     Additional command-line arguments for the RSVG converter, as a list. By
-    default, this is the emtpy list ``[]``.
+    default, this is the empty list ``[]``.
 
 CairoSVG
 --------
