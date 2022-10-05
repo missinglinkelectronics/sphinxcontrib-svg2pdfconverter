@@ -33,6 +33,8 @@ class InkscapeConverter(ImageConverter):
         ('image/svg+xml', 'application/pdf'),
     ]
 
+    inkscape_version: str = ""
+
     def is_available(self):
         # type: () -> bool
         """Confirms if Inkscape is available or not."""
@@ -48,8 +50,8 @@ class InkscapeConverter(ImageConverter):
                                   'Check the inkscape_converter_bin setting'),
                                self.config.inkscape_converter_bin, output)
                 return False
-            self._inkscape_version = match.group(1)
-            logger.debug('Inkscape version: %s', self._inkscape_version)
+            InkscapeConverter.inkscape_version = match.group(1)
+            logger.debug('Inkscape version: %s', InkscapeConverter.inkscape_version)
             return True
         except subprocess.CalledProcessError:
             return False
@@ -65,7 +67,7 @@ class InkscapeConverter(ImageConverter):
         try:
             args = ([self.config.inkscape_converter_bin] +
                     self.config.inkscape_converter_args)
-            if self._inkscape_version.startswith('1.'):
+            if InkscapeConverter.inkscape_version.startswith('1.'):
                     args += ['--export-filename=' + _to, _from]
             else:
                     args += ['--export-pdf=' + _to, _from]
