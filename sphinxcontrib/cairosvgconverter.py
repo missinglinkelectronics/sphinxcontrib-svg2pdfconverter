@@ -8,8 +8,8 @@
 
     See <https://cairosvg.org/>.
 
-    :copyright: Copyright 2018-2020 by Stefan Wiehler
-                <stefan.wiehler@missinglinkelectronics.com> and
+    :copyright: Copyright 2018-2023 by Stefan Wiehler
+                <sphinx_contribute@missinglinkelectronics.com> and
                 Copyright 2020 by Marko Kohtala
                 <marko.kohtala@gmail.com>.
     :license: BSD, see LICENSE.txt for details.

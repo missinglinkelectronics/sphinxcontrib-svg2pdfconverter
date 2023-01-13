@@ -18,7 +18,7 @@ setup(
     download_url='https://pypi.org/project/sphinxcontrib-svg2pdfconverter',
     license='BSD',
     author='Stefan Wiehler',
-    author_email='stefan.wiehler@missinglinkelectronics.com',
+    author_email='sphinx_contribute@missinglinkelectronics.com',
     description='Sphinx SVG to PDF converter extension',
     long_description=long_description,
     long_description_content_type='text/x-rst',

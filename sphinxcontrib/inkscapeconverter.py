@@ -6,8 +6,8 @@
     Converts SVG images to PDF using Inkscape in case the builder does not
     support SVG images natively (e.g. LaTeX).
 
-    :copyright: Copyright 2018-2020 by Stefan Wiehler
-                <stefan.wiehler@missinglinkelectronics.com>.
+    :copyright: Copyright 2018-2023 by Stefan Wiehler
+                <sphinx_contribute@missinglinkelectronics.com>.
     :license: BSD, see LICENSE.txt for details.
 """
 import re
