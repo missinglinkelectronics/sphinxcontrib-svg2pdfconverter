@@ -55,7 +55,8 @@ class RSVGConverter(ImageConverter):
         try:
             args = ([self.config.rsvg_converter_bin] +
                     self.config.rsvg_converter_args +
-                    ['--format=pdf', '--output=' + _to, _from])
+                    ['--format=' + self.config.rsvg_converter_format,
+                     '--output=' + _to, _from])
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         except OSError as err:
@@ -86,6 +87,7 @@ def setup(app):
     app.add_post_transform(RSVGConverter)
     app.add_config_value('rsvg_converter_bin', 'rsvg-convert', 'env')
     app.add_config_value('rsvg_converter_args', [], 'env')
+    app.add_config_value('rsvg_converter_format', 'pdf', 'env')
 
     return {
         'version': 'builtin',
