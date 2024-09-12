@@ -58,6 +58,11 @@ RSVG
 ``rsvg_converter_bin``
     Path to RSVG converter binary. By default, this is ``rsvg-convert``.
 
+``rsvg_converter_format``
+    The value provided to the RSVG converter's ``--format`` argument. In more
+    recent RSVG builds, the ``pdf1.5`` format will generate the fewest warnings
+    with LaTeX backends. By default, this is ``pdf``.
+
 ``rsvg_converter_args``
     Additional command-line arguments for the RSVG converter, as a list. By
     default, this is the empty list ``[]``.
