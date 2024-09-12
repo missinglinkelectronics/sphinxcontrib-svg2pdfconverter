@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools >=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphinxcontrib-svg2pdfconverter"
+version = "1.2.2"
+description = "Sphinx SVG to PDF converter extension"
+readme = "README.rst"
+license = {text = "BSD-2-Clause"}
+authors = [
+  {name = "Stefan Wiehler", email = "sphinx_contribute@missinglinkelectronics.com"},
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Framework :: Sphinx :: Extension",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Documentation",
+  "Topic :: Utilities",
+]
+requires-python = ">=3.6"
+dependencies = [
+  "Sphinx>=1.6.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter"
+Download = "https://pypi.org/project/sphinxcontrib-svg2pdfconverter"
+
+[project.optional-dependencies]
+CairoSVG = [
+  "cairosvg>=1.0",
+]
