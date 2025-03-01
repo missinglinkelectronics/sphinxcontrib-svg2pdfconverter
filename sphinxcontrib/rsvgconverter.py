@@ -56,7 +56,7 @@ class RSVGConverter(ImageConverter):
             args = ([self.config.rsvg_converter_bin] +
                     self.config.rsvg_converter_args +
                     ['--format=' + self.config.rsvg_converter_format,
-                     '--output=' + _to, _from])
+                     '--output=' + str(_to), str(_from)])
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         except OSError as err:
