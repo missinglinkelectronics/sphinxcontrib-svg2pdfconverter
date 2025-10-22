@@ -67,10 +67,10 @@ class InkscapeConverter(ImageConverter):
         try:
             args = ([self.config.inkscape_converter_bin] +
                     self.config.inkscape_converter_args)
-            if not InkscapeConverter.inkscape_version.startswith('1.'):
-                    args += ['--export-pdf=' + _to, _from]
-            else:
+            if InkscapeConverter.inkscape_version.startswith('1.') or not InkscapeConverter.inkscape_version:
                     args += ['--export-filename=' + _to, _from]
+            else:
+                    args += ['--export-pdf=' + _to, _from]
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE,
