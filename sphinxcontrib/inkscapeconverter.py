@@ -3,7 +3,7 @@
     sphinxcontrib.inkscapeconverter
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Converts SVG images to PDF using Inkscape in case the builder does not
+    Converts SVG images to PDF or PNG using Inkscape in case the builder does not
     support SVG images natively (e.g. LaTeX).
 
     :copyright: Copyright 2018-2023 by Stefan Wiehler
@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 class InkscapeConverter(ImageConverter):
     conversion_rules = [
         ('image/svg+xml', 'application/pdf'),
+        ('image/svg+xml', 'image/png'),
     ]
 
     inkscape_version: str = ""
@@ -70,7 +71,10 @@ class InkscapeConverter(ImageConverter):
             if InkscapeConverter.inkscape_version.startswith('1.'):
                     args += ['--export-filename=' + _to, _from]
             else:
-                    args += ['--export-pdf=' + _to, _from]
+                    import pathlib
+                    # Guess output format based on file extension
+                    fmt = pathlib.Path(str(_to)).suffix[1:]
+                    args += [f'--export-{fmt}=' + _to, _from]
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE,

@@ -3,13 +3,14 @@
     sphinxcontrib.rsvgconverter
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Converts SVG images to PDF using libRSVG in case the builder does not
+    Converts SVG images to PDF or PNG using libRSVG in case the builder does not
     support SVG images natively (e.g. LaTeX).
 
     :copyright: Copyright 2018-2023 by Stefan Wiehler
                 <sphinx_contribute@missinglinkelectronics.com>.
     :license: BSD, see LICENSE.txt for details.
 """
+import pathlib
 import subprocess
 
 from sphinx.errors import ExtensionError
@@ -30,6 +31,7 @@ logger = logging.getLogger(__name__)
 class RSVGConverter(ImageConverter):
     conversion_rules = [
         ('image/svg+xml', 'application/pdf'),
+        ('image/svg+xml', 'image/png'),
     ]
 
     def is_available(self):
@@ -51,11 +53,17 @@ class RSVGConverter(ImageConverter):
 
     def convert(self, _from, _to):
         # type: (unicode, unicode) -> bool
-        """Converts the image from SVG to PDF via libRSVG."""
+        """Converts the image from SVG to PDF or PNG via libRSVG."""
         try:
+            # Guess output format based on file extension
+            fmt = pathlib.Path(str(_to)).suffix[1:]
+            # rsvg-convert supports different standards of PDF, so use the
+            # rsvg_converter_format config when building a PDF
+            if fmt == 'pdf':
+                fmt = self.config.rsvg_converter_format
             args = ([self.config.rsvg_converter_bin] +
                     self.config.rsvg_converter_args +
-                    ['--format=' + self.config.rsvg_converter_format,
+                    ['--format=' + fmt,
                      '--output=' + str(_to), str(_from)])
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -86,7 +94,9 @@ def setup(app):
     # type: (Sphinx) -> Dict[unicode, Any]
     app.add_post_transform(RSVGConverter)
     app.add_config_value('rsvg_converter_bin', 'rsvg-convert', 'env')
+    # Applies to both PDF and PNG output
     app.add_config_value('rsvg_converter_args', [], 'env')
+    # Only applies to PDF output
     app.add_config_value('rsvg_converter_format', 'pdf', 'env')
 
     return {
