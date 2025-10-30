@@ -69,12 +69,12 @@ class InkscapeConverter(ImageConverter):
             args = ([self.config.inkscape_converter_bin] +
                     self.config.inkscape_converter_args)
             if InkscapeConverter.inkscape_version.startswith('1.'):
-                    args += ['--export-filename=' + _to, _from]
+                    args += ['--export-filename=' + str(_to), str(_from)]
             else:
                     import pathlib
                     # Guess output format based on file extension
                     fmt = pathlib.Path(str(_to)).suffix[1:]
-                    args += [f'--export-{fmt}=' + _to, _from]
+                    args += [f'--export-{fmt}=' + str(_to), str(_from)]
             logger.debug('Invoking %r ...', args)
             p = subprocess.Popen(args, stdin=subprocess.PIPE,
                                  stdout=subprocess.PIPE,
