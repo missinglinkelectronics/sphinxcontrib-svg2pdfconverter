@@ -1,0 +1,58 @@
+---
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        converter: [cairosvgconverter, inkscapeconverter, rsvgconverter]
+        format:
+          - ext: pdf
+            image_type: application/pdf
+          - ext: png
+            image_type: image/png
+
+      fail-fast: false
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/sphinxdoc/sphinx-latexpdf
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup ${{ matrix.converter }}
+        run: |
+          set -xe
+
+          case "${{ matrix.converter }}" in
+            "cairosvgconverter")
+              python3 -m pip install -e '.[CairoSVG]'
+              ;;
+            "inkscapeconverter")
+              apt-get update
+              apt-get install -y --no-install-recommends inkscape
+              inkscape --version
+              python3 -m pip install -e '.'
+              ;;
+            "rsvgconverter")
+              apt-get update
+              apt-get install -y --no-install-recommends librsvg2-bin
+              rsvg-convert --version
+              python3 -m pip install -e '.'
+              ;;
+            *)
+              echo "Invalid converter ${{ matrix.converter }} "
+              exit 1
+          esac
+
+      - name: Build example sphinx project with ${{ matrix.converter }} converting to ${{ matrix.format.ext }}
+        run: |
+          set -xe
+          cd example
+          cat >> conf.py << EOF
+          extensions = ['sphinxcontrib.${{ matrix.converter }}']
+          # Force supported type to only one to make sure we are
+          # building what we want to test
+          from sphinx.builders.latex import LaTeXBuilder
+          LaTeXBuilder.supported_image_types = ['${{ matrix.format.image_type }}']
+          EOF
+          make latexpdf
+          test -f "_build/doctrees/images/test.${{ matrix.format.ext }}"
