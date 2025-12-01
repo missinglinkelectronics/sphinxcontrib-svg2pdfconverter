@@ -1,8 +1,8 @@
-*************************************
-Sphinx SVG to PDF Converter Extension
-*************************************
+********************************************
+Sphinx SVG to PDF or PNG Converter Extension
+********************************************
 
-This extension converts SVG images to PDF in case the builder does not support
+This extension converts SVG images to PDF or PNG in case the builder does not support
 SVG images natively (e.g. LaTeX).
 
 Internally, either `Inkscape <https://inkscape.org/>`_, ``rsvg-convert``
@@ -59,9 +59,10 @@ RSVG
     Path to RSVG converter binary. By default, this is ``rsvg-convert``.
 
 ``rsvg_converter_format``
-    The value provided to the RSVG converter's ``--format`` argument. In more
-    recent RSVG builds, the ``pdf1.5`` format will generate the fewest warnings
-    with LaTeX backends. By default, this is ``pdf``.
+    The value provided to the RSVG converter's ``--format`` argument when
+    converting to PDF. In more recent RSVG builds, the ``pdf1.5`` format will
+    generate the fewest warnings with LaTeX backends.
+    By default, this is ``pdf``.
 
 ``rsvg_converter_args``
     Additional command-line arguments for the RSVG converter, as a list. By

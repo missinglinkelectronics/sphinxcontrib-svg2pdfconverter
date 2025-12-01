@@ -3,7 +3,7 @@
     sphinxcontrib.cairosvgconverter
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Converts SVG images to PDF using CairoSVG in case the builder does not
+    Converts SVG images to PDF or PNG using CairoSVG in case the builder does not
     support SVG images natively (e.g. LaTeX).
 
     See <https://cairosvg.org/>.
@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
 class CairoSVGConverter(ImageConverter):
     conversion_rules = [
         ('image/svg+xml', 'application/pdf'),
+        ('image/svg+xml', 'image/png'),
     ]
 
     def is_available(self):
@@ -48,10 +49,16 @@ class CairoSVGConverter(ImageConverter):
 
     def convert(self, _from, _to):
         # type: (unicode, unicode) -> bool
-        """Converts the image from SVG to PDF via CairoSVG."""
+        """Converts the image from SVG to PDF or PNG via CairoSVG."""
         import cairosvg
+        import pathlib
         try:
-            cairosvg.svg2pdf(file_obj=open(_from, 'rb'), write_to=_to)
+            # Guess output format based on file extension
+            fmt = pathlib.Path(str(_to)).suffix[1:]
+            if fmt == 'png':
+                cairosvg.svg2png(file_obj=open(_from, 'rb'), write_to=_to)
+            else:
+                cairosvg.svg2pdf(file_obj=open(_from, 'rb'), write_to=_to)
         except (OSError, URLError) as err:
             raise ExtensionError(__('CairoSVG converter failed with reason: '
                                     '%s') % err.reason)
