@@ -68,7 +68,7 @@ class InkscapeConverter(ImageConverter):
         try:
             args = ([self.config.inkscape_converter_bin] +
                     self.config.inkscape_converter_args)
-            if InkscapeConverter.inkscape_version.startswith('1.'):
+            if InkscapeConverter.inkscape_version.startswith('1.') or not InkscapeConverter.inkscape_version:
                     args += ['--export-filename=' + str(_to), str(_from)]
             else:
                     import pathlib
