@@ -1,20 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-    sphinxcontrib.cairosvgconverter
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Converts SVG images to PDF or PNG using CairoSVG in case the builder does not
-    support SVG images natively (e.g. LaTeX).
-
-    See <https://cairosvg.org/>.
-
-    :copyright: Copyright 2018-2023 by Stefan Wiehler
-                <sphinx_contribute@missinglinkelectronics.com> and
-                Copyright 2020 by Marko Kohtala
-                <marko.kohtala@gmail.com>.
-    :license: BSD, see LICENSE.txt for details.
-"""
-
+# SPDX-License-Indentifier: BSD-2-Clause
+# Copyright (C) 2018-2023 Stefan Wiehler <sphinx_contribute@missinglinkelectronics.com>
+# Copyright (C) 2020 by Marko Kohtala <marko.kohtala@gmail.com>
 from sphinx.errors import ExtensionError
 from sphinx.locale import __
 from sphinx.transforms.post_transforms.images import ImageConverter
@@ -64,14 +51,3 @@ class CairoSVGConverter(ImageConverter):
                                     '%s') % err.reason)
 
         return True
-
-
-def setup(app):
-    # type: (Sphinx) -> Dict[unicode, Any]
-    app.add_post_transform(CairoSVGConverter)
-
-    return {
-        'version': 'builtin',
-        'parallel_read_safe': True,
-        'parallel_write_safe': True,
-    }
